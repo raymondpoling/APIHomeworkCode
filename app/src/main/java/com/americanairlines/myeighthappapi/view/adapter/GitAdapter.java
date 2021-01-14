@@ -16,12 +16,16 @@ import java.util.List;
 public class GitAdapter extends RecyclerView.Adapter<GitAdapter.GitViewHolder> {
 
     private List<GitResponse> responseList;
+    private GitDelegate gitDelegate;
 
-
-    public GitAdapter(List<GitResponse> responseList) {
-        this.responseList = responseList;
+    public interface GitDelegate{
+        public void selectItem(GitResponse gitResponse);
     }
 
+    public GitAdapter(List<GitResponse> responseList, GitDelegate gitDelegate) {
+        this.responseList = responseList;
+        this.gitDelegate = gitDelegate;
+    }
 
     public void setResponseList(List<GitResponse> responseList) {
         this.responseList = responseList;
@@ -39,6 +43,13 @@ public class GitAdapter extends RecyclerView.Adapter<GitAdapter.GitViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull GitViewHolder holder, int position) {
         holder.repoNameTextView.setText(responseList.get(position).getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gitDelegate.selectItem(responseList.get(position));
+            }
+        });
     }
 
     @Override

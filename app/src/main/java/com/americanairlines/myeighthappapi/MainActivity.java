@@ -29,12 +29,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GitAdapter.GitDelegate {
 
     private GitRetrofit gitRetrofit = new GitRetrofit();
     private RecyclerView gitRecyclerView;
-    private GitAdapter gitAdapter = new GitAdapter(new ArrayList<>());
+    private GitAdapter gitAdapter = new GitAdapter(new ArrayList<>(), this);
     private ImageView userImageView;
+
+    private DetailsFragment detailsFragment = new DetailsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         userImageView = findViewById(R.id.main_avatar_imageview);
 
         //use okhttp
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -111,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void selectItem(GitResponse gitResponse) {
+
+        Bundle args = new Bundle();
+        args.putParcelable("num1", gitResponse);
+        detailsFragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.details_frame, detailsFragment)
+                .addToBackStack(detailsFragment.getTag())
+                .commit();
+    }
 }
 
 

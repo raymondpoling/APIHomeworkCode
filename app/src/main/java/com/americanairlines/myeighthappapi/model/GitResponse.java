@@ -1,10 +1,15 @@
 
 package com.americanairlines.myeighthappapi.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GitResponse {
+import java.io.Serializable;
+
+public class GitResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -225,6 +230,135 @@ public class GitResponse {
     @SerializedName("default_branch")
     @Expose
     private String defaultBranch;
+
+    protected GitResponse(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        nodeId = in.readString();
+        name = in.readString();
+        fullName = in.readString();
+        byte tmp_private = in.readByte();
+        _private = tmp_private == 0 ? null : tmp_private == 1;
+        htmlUrl = in.readString();
+        description = in.readString();
+        byte tmpFork = in.readByte();
+        fork = tmpFork == 0 ? null : tmpFork == 1;
+        url = in.readString();
+        forksUrl = in.readString();
+        keysUrl = in.readString();
+        collaboratorsUrl = in.readString();
+        teamsUrl = in.readString();
+        hooksUrl = in.readString();
+        issueEventsUrl = in.readString();
+        eventsUrl = in.readString();
+        assigneesUrl = in.readString();
+        branchesUrl = in.readString();
+        tagsUrl = in.readString();
+        blobsUrl = in.readString();
+        gitTagsUrl = in.readString();
+        gitRefsUrl = in.readString();
+        treesUrl = in.readString();
+        statusesUrl = in.readString();
+        languagesUrl = in.readString();
+        stargazersUrl = in.readString();
+        contributorsUrl = in.readString();
+        subscribersUrl = in.readString();
+        subscriptionUrl = in.readString();
+        commitsUrl = in.readString();
+        gitCommitsUrl = in.readString();
+        commentsUrl = in.readString();
+        issueCommentUrl = in.readString();
+        contentsUrl = in.readString();
+        compareUrl = in.readString();
+        mergesUrl = in.readString();
+        archiveUrl = in.readString();
+        downloadsUrl = in.readString();
+        issuesUrl = in.readString();
+        pullsUrl = in.readString();
+        milestonesUrl = in.readString();
+        notificationsUrl = in.readString();
+        labelsUrl = in.readString();
+        releasesUrl = in.readString();
+        deploymentsUrl = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+        pushedAt = in.readString();
+        gitUrl = in.readString();
+        sshUrl = in.readString();
+        cloneUrl = in.readString();
+        svnUrl = in.readString();
+        if (in.readByte() == 0) {
+            size = null;
+        } else {
+            size = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            stargazersCount = null;
+        } else {
+            stargazersCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            watchersCount = null;
+        } else {
+            watchersCount = in.readInt();
+        }
+        language = in.readString();
+        byte tmpHasIssues = in.readByte();
+        hasIssues = tmpHasIssues == 0 ? null : tmpHasIssues == 1;
+        byte tmpHasProjects = in.readByte();
+        hasProjects = tmpHasProjects == 0 ? null : tmpHasProjects == 1;
+        byte tmpHasDownloads = in.readByte();
+        hasDownloads = tmpHasDownloads == 0 ? null : tmpHasDownloads == 1;
+        byte tmpHasWiki = in.readByte();
+        hasWiki = tmpHasWiki == 0 ? null : tmpHasWiki == 1;
+        byte tmpHasPages = in.readByte();
+        hasPages = tmpHasPages == 0 ? null : tmpHasPages == 1;
+        if (in.readByte() == 0) {
+            forksCount = null;
+        } else {
+            forksCount = in.readInt();
+        }
+        byte tmpArchived = in.readByte();
+        archived = tmpArchived == 0 ? null : tmpArchived == 1;
+        byte tmpDisabled = in.readByte();
+        disabled = tmpDisabled == 0 ? null : tmpDisabled == 1;
+        if (in.readByte() == 0) {
+            openIssuesCount = null;
+        } else {
+            openIssuesCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            forks = null;
+        } else {
+            forks = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            openIssues = null;
+        } else {
+            openIssues = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            watchers = null;
+        } else {
+            watchers = in.readInt();
+        }
+        defaultBranch = in.readString();
+    }
+
+    public static final Creator<GitResponse> CREATOR = new Creator<GitResponse>() {
+        @Override
+        public GitResponse createFromParcel(Parcel in) {
+            return new GitResponse(in);
+        }
+
+        @Override
+        public GitResponse[] newArray(int size) {
+            return new GitResponse[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -810,4 +944,126 @@ public class GitResponse {
         this.defaultBranch = defaultBranch;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeString(nodeId);
+        parcel.writeString(name);
+        parcel.writeString(fullName);
+        parcel.writeByte((byte) (_private == null ? 0 : _private ? 1 : 2));
+        parcel.writeString(htmlUrl);
+        parcel.writeString(description);
+        parcel.writeByte((byte) (fork == null ? 0 : fork ? 1 : 2));
+        parcel.writeString(url);
+        parcel.writeString(forksUrl);
+        parcel.writeString(keysUrl);
+        parcel.writeString(collaboratorsUrl);
+        parcel.writeString(teamsUrl);
+        parcel.writeString(hooksUrl);
+        parcel.writeString(issueEventsUrl);
+        parcel.writeString(eventsUrl);
+        parcel.writeString(assigneesUrl);
+        parcel.writeString(branchesUrl);
+        parcel.writeString(tagsUrl);
+        parcel.writeString(blobsUrl);
+        parcel.writeString(gitTagsUrl);
+        parcel.writeString(gitRefsUrl);
+        parcel.writeString(treesUrl);
+        parcel.writeString(statusesUrl);
+        parcel.writeString(languagesUrl);
+        parcel.writeString(stargazersUrl);
+        parcel.writeString(contributorsUrl);
+        parcel.writeString(subscribersUrl);
+        parcel.writeString(subscriptionUrl);
+        parcel.writeString(commitsUrl);
+        parcel.writeString(gitCommitsUrl);
+        parcel.writeString(commentsUrl);
+        parcel.writeString(issueCommentUrl);
+        parcel.writeString(contentsUrl);
+        parcel.writeString(compareUrl);
+        parcel.writeString(mergesUrl);
+        parcel.writeString(archiveUrl);
+        parcel.writeString(downloadsUrl);
+        parcel.writeString(issuesUrl);
+        parcel.writeString(pullsUrl);
+        parcel.writeString(milestonesUrl);
+        parcel.writeString(notificationsUrl);
+        parcel.writeString(labelsUrl);
+        parcel.writeString(releasesUrl);
+        parcel.writeString(deploymentsUrl);
+        parcel.writeString(createdAt);
+        parcel.writeString(updatedAt);
+        parcel.writeString(pushedAt);
+        parcel.writeString(gitUrl);
+        parcel.writeString(sshUrl);
+        parcel.writeString(cloneUrl);
+        parcel.writeString(svnUrl);
+        if (size == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(size);
+        }
+        if (stargazersCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(stargazersCount);
+        }
+        if (watchersCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(watchersCount);
+        }
+        parcel.writeString(language);
+        parcel.writeByte((byte) (hasIssues == null ? 0 : hasIssues ? 1 : 2));
+        parcel.writeByte((byte) (hasProjects == null ? 0 : hasProjects ? 1 : 2));
+        parcel.writeByte((byte) (hasDownloads == null ? 0 : hasDownloads ? 1 : 2));
+        parcel.writeByte((byte) (hasWiki == null ? 0 : hasWiki ? 1 : 2));
+        parcel.writeByte((byte) (hasPages == null ? 0 : hasPages ? 1 : 2));
+        if (forksCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(forksCount);
+        }
+        parcel.writeByte((byte) (archived == null ? 0 : archived ? 1 : 2));
+        parcel.writeByte((byte) (disabled == null ? 0 : disabled ? 1 : 2));
+        if (openIssuesCount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(openIssuesCount);
+        }
+        if (forks == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(forks);
+        }
+        if (openIssues == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(openIssues);
+        }
+        if (watchers == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(watchers);
+        }
+        parcel.writeString(defaultBranch);
+    }
 }
