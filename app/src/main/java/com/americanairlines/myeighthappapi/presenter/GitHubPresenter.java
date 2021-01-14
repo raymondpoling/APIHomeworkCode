@@ -1,26 +1,15 @@
-package com.americanairlines.myeighthappapi;
+package com.americanairlines.myeighthappapi.presenter;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.americanairlines.myeighthappapi.model.GitResponse;
 import com.americanairlines.myeighthappapi.network.GitRetrofit;
 import com.americanairlines.myeighthappapi.view.adapter.GitAdapter;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,25 +18,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements GitAdapter.GitDelegate {
+public class GitHubPresenter implements GitHubPresenterContract.GitHubPresenter {
 
     private GitRetrofit gitRetrofit = new GitRetrofit();
-    private RecyclerView gitRecyclerView;
-    private GitAdapter gitAdapter = new GitAdapter(new ArrayList<>(), this);
-    private ImageView userImageView;
+    private GitAdapter gitAdapter;
+    private GitHubPresenterContract.GitHubView gitHubView;
 
-    private DetailsFragment detailsFragment = new DetailsFragment();
+    public GitHubPresenter(GitHubPresenterContract.GitHubView gitHubView) {
+        this.gitHubView = gitHubView;
+        gitAdapter = new GitAdapter(new ArrayList<>(0), gitHubView);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-
-        gitRecyclerView = findViewById(R.id.main_recyclerview);
-        gitRecyclerView.setAdapter(gitAdapter);
-        userImageView = findViewById(R.id.main_avatar_imageview);
-
+    public void getGitHub() {
         //use okhttp
         new Thread() {
             @Override
@@ -70,11 +53,7 @@ public class MainActivity extends AppCompatActivity implements GitAdapter.GitDel
 
                                 if (response.isSuccessful() && response.body() != null) {
                                     Log.d("TAG_X", "" + response.body().size());
-                                    gitAdapter.setResponseList(response.body());
-                                    Glide.with(MainActivity.this)
-                                            .setDefaultRequestOptions(RequestOptions.circleCropTransform())
-                                            .load(response.body().get(0).getOwner().getAvatarUrl())
-                                            .into(userImageView);
+                                    gitHubView.displayGitHub(response.body());
                                 } else
                                     Log.d("TAG_X", "Error something did not workout...");
                             }
@@ -112,32 +91,4 @@ public class MainActivity extends AppCompatActivity implements GitAdapter.GitDel
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void selectItem(GitResponse gitResponse) {
-
-        Bundle args = new Bundle();
-        args.putParcelable("num1", gitResponse);
-        detailsFragment.setArguments(args);
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.details_frame, detailsFragment)
-                .addToBackStack(detailsFragment.getTag())
-                .commit();
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

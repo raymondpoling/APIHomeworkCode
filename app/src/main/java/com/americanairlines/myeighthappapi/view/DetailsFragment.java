@@ -1,7 +1,8 @@
-package com.americanairlines.myeighthappapi;
+package com.americanairlines.myeighthappapi.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.americanairlines.myeighthappapi.R;
 import com.americanairlines.myeighthappapi.model.GitResponse;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.w3c.dom.Text;
+
+import static com.americanairlines.myeighthappapi.util.Constants.LOG_TAG;
 
 public class DetailsFragment extends Fragment {
 
@@ -43,17 +47,22 @@ public class DetailsFragment extends Fragment {
 
 //        if (getArguments() != null) {
         //Assuming its not null - TODO: null check
-            GitResponse response = getArguments().getParcelable("num1");
-            Glide.with(getContext())
-                    .setDefaultRequestOptions(RequestOptions.circleCropTransform())
-                    .load(response.getOwner().getAvatarUrl())
-                    .placeholder(R.drawable.ic_placeholder)
-                    .into(authorAvatar);
 
-            authorTextView.setText(response.getOwner().getLogin());
-            commitsTextView.setText(response.getCommitsUrl());
-            repoTitleTextView.setText(response.getName());
+
+        if(getArguments() != null && getArguments().getParcelable("num1") != null) {
+            Log.d(LOG_TAG, "Got");
+            GitResponse response = getArguments().getParcelable("num1");
+                Glide.with(getContext())
+                        .setDefaultRequestOptions(RequestOptions.circleCropTransform())
+                        .load(response.getOwner().getAvatarUrl())
+                        .placeholder(R.drawable.ic_placeholder)
+                        .into(authorAvatar);
+
+                authorTextView.setText(response.getOwner().getLogin());
+                commitsTextView.setText(response.getCommitsUrl());
+                repoTitleTextView.setText(response.getName());
 //        }
+            }
     }
 }
 
