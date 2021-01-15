@@ -54,9 +54,7 @@ public class MainActivity extends AppCompatActivity implements GitAdapter.GitDel
                 .addToBackStack(detailsFragment.getTag())
                 .commit();
 
-        findViewById(R.id.details_frame).setOnClickListener(v -> {
-            getSupportFragmentManager().popBackStack();
-        });
+
 
     }
 }
